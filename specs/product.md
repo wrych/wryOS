@@ -21,6 +21,11 @@ each order from the shopper's click to the finished, shipped part.
 wryOS starts with wood (signs and similar flat parts) and is built so metal can
 follow.
 
+**Simplicity is a requirement, not a wish.** Every screen has one obvious next
+action. A feature that needs explaining is redesigned or dropped. A requirement
+below that cannot be met simply is cut back before it is built, and anything
+not needed for the current milestone waits.
+
 ## 2. Decisions taken so far
 
 | Topic            | Decision                                                                                                                                   |
@@ -36,6 +41,7 @@ follow.
 | Machines         | Controller-neutral. Manual file transfer first; machine connectors plug in later.                                                          |
 | Business scope   | Online payment, shipping, invoices and VAT, material stock tracking are all in version 1.                                                  |
 | Market           | Switzerland only: CHF, Swiss VAT, TWINT and cards, Swiss Post, German first with further languages prepared.                               |
+| Analytics        | Mixpanel, for the store and the back office, without personal data and only when configured.                                               |
 | Technology       | TypeScript and Postgres; self-hosting from one Docker Compose file.                                                                        |
 | First milestone  | The storefront is close to finished, to test demand. Every later step exists in a simple form so a real order can be fulfilled end to end. |
 
@@ -238,6 +244,23 @@ The shopper can see the order's status at every step.
 - **SYS-6** Shopper data is kept only as long as the order, the warranty and
   the law require, and can be exported or deleted on request.
 
+### 5.13 Analytics (AN)
+
+- **AN-1** The store records how shoppers move from product view to
+  customisation, checkout and payment, so the shop sees where they leave.
+- **AN-2** The back office and shop floor record which features are used and
+  how long each order step takes.
+- **AN-3** Events carry no personal data: no name, address, e-mail, and never
+  the text a shopper typed. Shoppers are counted with a random id.
+- **AN-4** Store analytics follow the shopper's consent choice under Swiss data
+  protection law; refusing changes nothing else in the store.
+- **AN-5** Events are sent to Mixpanel, with data kept in the EU. All events
+  pass through one function, named in one list, so the list is the full record
+  of what is collected.
+- **AN-6** Analytics are off unless a Mixpanel key is configured. A self-hosted
+  installation works fully without it.
+- **AN-7** Each shop sees only its own figures.
+
 ## 6. First milestone
 
 Goal: find out whether shoppers want this, and be able to deliver if they do.
@@ -254,6 +277,7 @@ Goal: find out whether shoppers want this, and be able to deliver if they do.
 | Machines          | MA-1, MA-2, MA-4.                                                                     |
 | Shipping          | SH-1 with fixed rates; labels made by hand at Swiss Post; SH-3 typed in.              |
 | Integration       | The interfaces exist because wryOS's own screens use them (IN-1). No devices yet.     |
+| Analytics         | AN-1 and AN-3 to AN-6: the store funnel is what measures demand. AN-2 follows.        |
 | Shops             | Data is kept per shop from the first day (SYS-1). Self-service sign-up comes later.   |
 
 Later: self-service shop onboarding, Swiss Post label printing, accounting
@@ -292,5 +316,7 @@ pricing, free dimensions, uploads, metal.
    on the shop PC; the terms for automated use need checking before CAM-3 is
    built.
 9. **Hosted fee.** A fixed monthly amount, or a small share per order?
-10. **Shop languages.** Is the back office German only at first, or also
+10. **Analytics for shops.** Does each shop see its funnel inside wryOS
+    (AN-7), or is Mixpanel only for whoever hosts the installation at first?
+11. **Shop languages.** Is the back office German only at first, or also
     English for the open-source community?
