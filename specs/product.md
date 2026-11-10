@@ -23,41 +23,41 @@ follow.
 
 **Simplicity is a requirement, not a wish.** Every screen has one obvious next
 action. A feature that needs explaining is redesigned or dropped. A requirement
-below that cannot be met simply is cut back before it is built, and anything
-not needed for the current milestone waits.
+below that cannot be met simply is cut back before it is built, and anything not
+needed for the current milestone waits.
 
 ## 2. Decisions taken so far
 
-| Topic            | Decision                                                                                                                                   |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| Audience         | Multi-shop SaaS. Open source; anyone can self-host. The hosted service may charge a small fee to cover costs.                              |
-| Storefront       | Each shop has its own branded store. No shared marketplace.                                                                                |
-| Customisation    | Text (and listed options such as font, size, wood) on designs the shop created. No free dimensions, no file upload in version 1.           |
-| Design source    | A parametric Fusion template with its CAM setup is the truth for the cut part. A web preview mirrors its parameters.                       |
-| Order to G-code  | A wryOS add-in runs inside Fusion on a PC in the shop. It sits behind a seam so a cloud CAM service can replace it.                        |
-| Price            | A formula per product (base price plus surcharges per option). It sits behind a seam so a CAM-based cost estimate can replace it.          |
-| Approval         | A person approves each new design once. Approved designs flow into the backlog without a per-order check.                                  |
-| Shop floor       | Guided manual steps first; each step is also an integration point.                                                                         |
-| Machines         | Controller-neutral. Manual file transfer first; machine connectors plug in later.                                                          |
-| Business scope   | Online payment, shipping, invoices and VAT, material stock tracking are all in version 1.                                                  |
-| Market           | Switzerland only: CHF, Swiss VAT, TWINT and cards, Swiss Post, German first with further languages prepared.                               |
-| Analytics        | Mixpanel, for the store and the back office, without personal data and only when configured.                                               |
-| Technology       | TypeScript and Postgres; self-hosting from one Docker Compose file.                                                                        |
-| First milestone  | The store alone, ending in a waiting list. Five orders in two weeks decide whether a CNC machine is bought and the rest is built.            |
+| Topic           | Decision                                                                                                                          |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Audience        | Multi-shop SaaS. Open source; anyone can self-host. The hosted service may charge a small fee to cover costs.                     |
+| Storefront      | Each shop has its own branded store. No shared marketplace.                                                                       |
+| Customisation   | Text (and listed options such as font, size, wood) on designs the shop created. No free dimensions, no file upload in version 1.  |
+| Design source   | A parametric Fusion template with its CAM setup is the truth for the cut part. A web preview mirrors its parameters.              |
+| Order to G-code | A wryOS add-in runs inside Fusion on a PC in the shop. It sits behind a seam so a cloud CAM service can replace it.               |
+| Price           | A formula per product (base price plus surcharges per option). It sits behind a seam so a CAM-based cost estimate can replace it. |
+| Approval        | A person approves each new design once. Approved designs flow into the backlog without a per-order check.                         |
+| Shop floor      | Guided manual steps first; each step is also an integration point.                                                                |
+| Machines        | Controller-neutral. Manual file transfer first; machine connectors plug in later.                                                 |
+| Business scope  | Online payment, shipping, invoices and VAT, material stock tracking are all in version 1.                                         |
+| Market          | Switzerland only: CHF, Swiss VAT, TWINT and cards, Swiss Post, German first with further languages prepared.                      |
+| Analytics       | Mixpanel, for the store and the back office, without personal data and only when configured.                                      |
+| Technology      | TypeScript and Postgres; self-hosting from one Docker Compose file.                                                               |
+| First milestone | The store alone, ending in a waiting list. Five orders in two weeks decide whether a CNC machine is bought and the rest is built. |
 
 Technology, the Fusion bridge, the multi-shop model and the integration
 interface each get an ADR before code lands.
 
 ## 3. Who uses it
 
-| Person        | What they want                                                             |
-| ------------- | -------------------------------------------------------------------------- |
-| Shopper       | A personalised part, a clear price, no surprises.                          |
-| Shop owner    | Sell products, set prices, see money and stock, without an IT department.  |
-| Operator      | Know what to make next and how. Often the same person as the owner.        |
-| Designer      | Turn a Fusion design into a sellable product. Often the owner too.         |
-| Integrator    | Connect a machine, a stock shelf or another system to the shop.            |
-| Host          | Run wryOS for one or many shops.                                           |
+| Person     | What they want                                                            |
+| ---------- | ------------------------------------------------------------------------- |
+| Shopper    | A personalised part, a clear price, no surprises.                         |
+| Shop owner | Sell products, set prices, see money and stock, without an IT department. |
+| Operator   | Know what to make next and how. Often the same person as the owner.       |
+| Designer   | Turn a Fusion design into a sellable product. Often the owner too.        |
+| Integrator | Connect a machine, a stock shelf or another system to the shop.           |
+| Host       | Run wryOS for one or many shops.                                          |
 
 ## 4. The journey of an order
 
@@ -66,8 +66,8 @@ interface each get an ADR before code lands.
 3. The order appears in the shop's backlog.
 4. The Fusion add-in fills the template with the shopper's values and returns
    G-code, the stock size needed and the estimated machine time.
-5. The operator is guided: cut stock, load it, load the file, run, finish,
-   check quality, pack.
+5. The operator is guided: cut stock, load it, load the file, run, finish, check
+   quality, pack.
 6. wryOS creates the shipping label; the shopper gets a tracking e-mail.
 7. The invoice is issued and the order is closed.
 
@@ -82,9 +82,9 @@ The shopper can see the order's status at every step.
 - **ST-2** A product page shows a live preview that updates as the shopper
   types, without a page reload and without waiting for the server.
 - **ST-3** The preview is the true 3D shape of the part as it will be cut
-  (carved depths, bevels, edges) in the real material look and real
-  proportions, and can be turned and zoomed. Tool marks are not shown. The
-  preview is not tied to signs: any part with a 3D shape can be shown.
+  (carved depths, bevels, edges) in the real material look and real proportions,
+  and can be turned and zoomed. Tool marks are not shown. The preview is not
+  tied to signs: any part with a 3D shape can be shown.
 - **ST-4** The price is shown at all times and updates with every change.
 - **ST-5** A customisation that cannot be made (text too long, a character the
   font lacks, a letter too thin for the tool) is refused while the shopper
@@ -109,10 +109,10 @@ The shopper can see the order's status at every step.
 - **PD-2** Each parameter has limits set by the shop: allowed values, lengths,
   characters.
 - **PD-3** The web preview is built from the same parameters. Before a product
-  can be published, wryOS shows the preview next to Fusion's own rendering for
-  a set of test values, and a person approves the match.
-- **PD-4** Approval also requires one successful G-code run through the
-  pipeline for the test values.
+  can be published, wryOS shows the preview next to Fusion's own rendering for a
+  set of test values, and a person approves the match.
+- **PD-4** Approval also requires one successful G-code run through the pipeline
+  for the test values.
 - **PD-5** A changed template is a new version and needs approval again. Orders
   keep the version they were placed with.
 - **PD-6** A product can be drafted, published, paused and retired.
@@ -134,8 +134,8 @@ The shopper can see the order's status at every step.
 - **OR-1** A paid order appears in the shop's backlog with its status, due date
   and what is blocking it, if anything.
 - **OR-2** The backlog is ordered by due date; the shop can reorder it.
-- **OR-3** An order can be cancelled and refunded until production starts.
-  After that the shop decides.
+- **OR-3** An order can be cancelled and refunded until production starts. After
+  that the shop decides.
 - **OR-4** A failed part (broken, wrong, poor quality) can be remade with one
   action; the extra stock is booked and the reason recorded.
 - **OR-5** Every status change is recorded with time and who or what caused it.
@@ -171,8 +171,8 @@ The shopper can see the order's status at every step.
   up with another job.
 - **SF-5** The operator can report a problem at any step; the order is then
   blocked and the owner is told.
-- **SF-6** Orders that share material and machine can be grouped so stock is
-  cut and loaded once.
+- **SF-6** Orders that share material and machine can be grouped so stock is cut
+  and loaded once.
 
 ### 5.7 Machines (MA)
 
@@ -243,15 +243,15 @@ The shopper can see the order's status at every step.
   command, and updated the same way.
 - **SYS-5** The hosted service can charge shops a fee; a self-hosted
   installation has no fee and no dependency on the hosted service.
-- **SYS-6** Shopper data is kept only as long as the order, the warranty and
-  the law require, and can be exported or deleted on request.
+- **SYS-6** Shopper data is kept only as long as the order, the warranty and the
+  law require, and can be exported or deleted on request.
 
 ### 5.13 Analytics (AN)
 
 - **AN-1** The store records how shoppers move from product view to
   customisation, checkout and payment, so the shop sees where they leave.
-- **AN-2** The back office and shop floor record which features are used and
-  how long each order step takes.
+- **AN-2** The back office and shop floor record which features are used and how
+  long each order step takes.
 - **AN-3** Events carry no personal data: no name, address, e-mail, and never
   the text a shopper typed. Shoppers are counted with a random id.
 - **AN-4** Store analytics follow the shopper's consent choice under Swiss data
@@ -267,26 +267,26 @@ The shopper can see the order's status at every step.
 
 Goal: find out whether shoppers want this, before buying a machine.
 
-**The test.** The store is live for two weeks. Five shoppers who configure a
-product and place it on the waiting list count as five orders. If that is
-reached, a CNC machine is bought and the second milestone starts.
+**The test.** It runs for two weeks, counted from the day the store goes live in
+production. Five shoppers who configure a product and place it on the waiting
+list count as five orders. If that is reached, a CNC machine is bought and the
+second milestone starts.
 
 In the first milestone:
 
 - **The store**, finished and polished: ST-1 to ST-5, ST-9, ST-11, ST-12, for
   one shop and a handful of sign products.
 - **The price**, real and instant: PR-1 to PR-4.
-- **The waiting list** in place of checkout: the shopper confirms the
-  configured product and its price and leaves an e-mail address to be told
-  when it can be bought. The store says plainly that nothing is charged and
-  nothing is made yet. The configuration is stored with the entry, so it can
-  become the first real order.
+- **The waiting list** in place of checkout: the shopper confirms the configured
+  product and its price and leaves an e-mail address to be told when it can be
+  bought. The store says plainly that nothing is charged and nothing is made
+  yet. The configuration is stored with the entry, so it can become the first
+  real order.
 - **Analytics**: AN-1 and AN-3 to AN-6. The funnel is the measurement.
 
 Not in the first milestone, and not built until the test passes: payment,
 invoices and VAT, shipping, the backlog, order to G-code, the shop floor,
-machines, materials and stock, device integration, shop sign-up and
-permissions.
+machines, materials and stock, device integration, shop sign-up and permissions.
 
 Two things are kept from the larger picture, because they cost little now and
 much later:
@@ -317,15 +317,15 @@ Everything else in section 5 follows in order of need.
 1. **Preview and the cut part.** Until a Fusion template exists, the store
    builds the 3D shape itself from the product's parameters. How is it later
    kept identical to what Fusion cuts (PD-3)?
-2. **Fonts.** Which fonts are offered, and are they licensed for web preview
-   and for manufacturing?
-3. **Reaching shoppers.** Where do the first visitors come from in the two
-   test weeks, and how many are needed for five orders to be a fair test?
+2. **Fonts.** Which fonts are offered, and are they licensed for web preview and
+   for manufacturing?
+3. **Reaching shoppers.** Where do the first visitors come from in the two test
+   weeks, and how many are needed for five orders to be a fair test?
 4. **Payment provider.** Stripe supports TWINT and payouts to each shop's own
    account; is a US provider acceptable, or is a Swiss one (Payrexx, Datatrans)
    preferred?
-5. **Returns.** Personalised goods are normally excluded from returns. What
-   does the shop promise when a part arrives damaged or wrong?
+5. **Returns.** Personalised goods are normally excluded from returns. What does
+   the shop promise when a part arrives damaged or wrong?
 6. **Finishing.** Are oiling, painting or mounting hardware options a shopper
    can choose, and so steps on the shop floor?
 7. **First machine.** Which CNC and controller is planned? It decides the first
@@ -334,7 +334,7 @@ Everything else in section 5 follows in order of need.
    on the shop PC; the terms for automated use need checking before CAM-3 is
    built.
 9. **Hosted fee.** A fixed monthly amount, or a small share per order?
-10. **Analytics for shops.** Does each shop see its funnel inside wryOS
-    (AN-7), or is Mixpanel only for whoever hosts the installation at first?
-11. **Shop languages.** Is the back office German only at first, or also
-    English for the open-source community?
+10. **Analytics for shops.** Does each shop see its funnel inside wryOS (AN-7),
+    or is Mixpanel only for whoever hosts the installation at first?
+11. **Shop languages.** Is the back office German only at first, or also English
+    for the open-source community?
