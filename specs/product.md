@@ -43,7 +43,7 @@ not needed for the current milestone waits.
 | Market           | Switzerland only: CHF, Swiss VAT, TWINT and cards, Swiss Post, German first with further languages prepared.                               |
 | Analytics        | Mixpanel, for the store and the back office, without personal data and only when configured.                                               |
 | Technology       | TypeScript and Postgres; self-hosting from one Docker Compose file.                                                                        |
-| First milestone  | The storefront is close to finished, to test demand. Every later step exists in a simple form so a real order can be fulfilled end to end. |
+| First milestone  | The store alone, ending in a waiting list. Five orders in two weeks decide whether a CNC machine is bought and the rest is built.            |
 
 Technology, the Fusion bridge, the multi-shop model and the integration
 interface each get an ADR before code lands.
@@ -81,8 +81,10 @@ The shopper can see the order's status at every step.
   on a wryOS address or the shop's own domain.
 - **ST-2** A product page shows a live preview that updates as the shopper
   types, without a page reload and without waiting for the server.
-- **ST-3** The preview shows the real material look (wood type, engraving
-  depth, finish) and the real proportions, and can be turned and zoomed.
+- **ST-3** The preview is the true 3D shape of the part as it will be cut
+  (carved depths, bevels, edges) in the real material look and real
+  proportions, and can be turned and zoomed. Tool marks are not shown. The
+  preview is not tied to signs: any part with a 3D shape can be shown.
 - **ST-4** The price is shown at all times and updates with every change.
 - **ST-5** A customisation that cannot be made (text too long, a character the
   font lacks, a letter too thin for the tool) is refused while the shopper
@@ -261,28 +263,45 @@ The shopper can see the order's status at every step.
   installation works fully without it.
 - **AN-7** Each shop sees only its own figures.
 
-## 6. First milestone
+## 6. First milestone: the store
 
-Goal: find out whether shoppers want this, and be able to deliver if they do.
+Goal: find out whether shoppers want this, before buying a machine.
 
-| Area              | In the first milestone                                                                |
-| ----------------- | ------------------------------------------------------------------------------------- |
-| Store             | Complete: ST-1 to ST-12, for one shop and a handful of sign products.                 |
-| Pricing           | Complete: PR-1 to PR-4.                                                               |
-| Payment           | PAY-1 to PAY-4.                                                                       |
-| Products          | PD-1 to PD-6, set up with help rather than a polished editor.                         |
-| Order to G-code   | CAM-1 to CAM-5, working for the first products.                                       |
-| Backlog and floor | OR-1, OR-3, OR-5, SF-1 to SF-5 in a plain form.                                       |
-| Materials         | MT-1 to MT-4.                                                                         |
-| Machines          | MA-1, MA-2, MA-4.                                                                     |
-| Shipping          | SH-1 with fixed rates; labels made by hand at Swiss Post; SH-3 typed in.              |
-| Integration       | The interfaces exist because wryOS's own screens use them (IN-1). No devices yet.     |
-| Analytics         | AN-1 and AN-3 to AN-6: the store funnel is what measures demand. AN-2 follows.        |
-| Shops             | Data is kept per shop from the first day (SYS-1). Self-service sign-up comes later.   |
+**The test.** The store is live for two weeks. Five shoppers who configure a
+product and place it on the waiting list count as five orders. If that is
+reached, a CNC machine is bought and the second milestone starts.
 
-Later: self-service shop onboarding, Swiss Post label printing, accounting
-export, machine connectors, device integrations, grouping of jobs, cost-based
-pricing, free dimensions, uploads, metal.
+In the first milestone:
+
+- **The store**, finished and polished: ST-1 to ST-5, ST-9, ST-11, ST-12, for
+  one shop and a handful of sign products.
+- **The price**, real and instant: PR-1 to PR-4.
+- **The waiting list** in place of checkout: the shopper confirms the
+  configured product and its price and leaves an e-mail address to be told
+  when it can be bought. The store says plainly that nothing is charged and
+  nothing is made yet. The configuration is stored with the entry, so it can
+  become the first real order.
+- **Analytics**: AN-1 and AN-3 to AN-6. The funnel is the measurement.
+
+Not in the first milestone, and not built until the test passes: payment,
+invoices and VAT, shipping, the backlog, order to G-code, the shop floor,
+machines, materials and stock, device integration, shop sign-up and
+permissions.
+
+Two things are kept from the larger picture, because they cost little now and
+much later:
+
+- Every record belongs to a shop (SYS-1), although there is only one.
+- A product is described by its parameters and their limits (PD-2), which is
+  what a Fusion template will later be filled with.
+
+## 6a. Second milestone: the first real order
+
+Starts when the test passes. One shop, one machine: payment, order to G-code
+(CAM-1 to CAM-5), a plain backlog and guided job (OR-1, SF-1 to SF-5), stock
+counts (MT-1 to MT-3), fixed-rate shipping with labels made by hand.
+
+Everything else in section 5 follows in order of need.
 
 ## 7. Not in version 1
 
@@ -295,14 +314,13 @@ pricing, free dimensions, uploads, metal.
 
 ## 8. Open questions
 
-1. **Preview fidelity.** Is a faithful 2.5D rendering (engraved text on a
-   textured board, turnable) enough, or must the preview show true 3D shapes
-   such as V-carved bevels?
+1. **Preview and the cut part.** Until a Fusion template exists, the store
+   builds the 3D shape itself from the product's parameters. How is it later
+   kept identical to what Fusion cuts (PD-3)?
 2. **Fonts.** Which fonts are offered, and are they licensed for web preview
    and for manufacturing?
-3. **Proof of demand.** May the first store take real payments before a machine
-   exists, with a stated longer delivery time, or should it collect
-   pre-orders or a waiting list only?
+3. **Reaching shoppers.** Where do the first visitors come from in the two
+   test weeks, and how many are needed for five orders to be a fair test?
 4. **Payment provider.** Stripe supports TWINT and payouts to each shop's own
    account; is a US provider acceptable, or is a Swiss one (Payrexx, Datatrans)
    preferred?
