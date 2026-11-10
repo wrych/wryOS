@@ -268,20 +268,28 @@ The shopper can see the order's status at every step.
 Goal: find out whether shoppers want this, before buying a machine.
 
 **The test.** It runs for two weeks, counted from the day the store goes live in
-production. Five shoppers who configure a product and place it on the waiting
-list count as five orders. If that is reached, a CNC machine is bought and the
-second milestone starts.
+production. The store looks and behaves like a finished shop. An order is a
+shopper who presses the purchase button and then reserves the configured product
+(see below). Five orders, and a CNC machine is bought and the second milestone
+starts. Visitors come from paid ads and the owner's own network; orders from
+each are counted separately, because friends are a kinder audience than
+strangers.
 
 In the first milestone:
 
 - **The store**, finished and polished: ST-1 to ST-5, ST-9, ST-11, ST-12, for
-  one shop and a handful of sign products.
+  one shop and three sign products: welcome sign, house number, name plate.
 - **The price**, real and instant: PR-1 to PR-4.
-- **The waiting list** in place of checkout: the shopper confirms the configured
-  product and its price and leaves an e-mail address to be told when it can be
-  bought. The store says plainly that nothing is charged and nothing is made
-  yet. The configuration is stored with the entry, so it can become the first
-  real order.
+- **The reservation** in place of checkout. When the shopper presses the
+  purchase button, and before any personal data is asked for, the store says
+  plainly: the shop is in its launch phase, nothing is charged now, and the part
+  will be made and delivered within four weeks of the shop confirming. The
+  shopper can then reserve with an e-mail address, or leave. The configuration
+  and its price are stored with the reservation, so it becomes the first real
+  order at that price.
+- **The preview** builds the 3D shape in the browser from the product's
+  parameters. The viewer takes any 3D shape, so later part types can get theirs
+  from Fusion.
 - **Analytics**: AN-1 and AN-3 to AN-6. The funnel is the measurement.
 
 Not in the first milestone, and not built until the test passes: payment,
@@ -319,8 +327,10 @@ Everything else in section 5 follows in order of need.
    kept identical to what Fusion cuts (PD-3)?
 2. **Fonts.** Which fonts are offered, and are they licensed for web preview and
    for manufacturing?
-3. **Reaching shoppers.** Where do the first visitors come from in the two test
-   weeks, and how many are needed for five orders to be a fair test?
+3. **Advertising an unreleased product.** Ad platforms and Swiss unfair
+   competition law both expect an advertised product to be obtainable. Is
+   "reserve now, delivered within four weeks of confirmation" enough, and must
+   the ads themselves say so?
 4. **Payment provider.** Stripe supports TWINT and payouts to each shop's own
    account; is a US provider acceptable, or is a Swiss one (Payrexx, Datatrans)
    preferred?
